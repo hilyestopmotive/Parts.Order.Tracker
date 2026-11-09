@@ -1,0 +1,22 @@
+@page "/orders"
+@using UI.Components
+
+<PageTitle>Orders</PageTitle>
+
+<h1>Orders</h1>
+
+@if (!loaded)
+{
+  <p>Loading...</p>
+}
+else if (CartService.Orders.Count == 0)
+{
+  <p>You have no orders yet.</p>
+}
+else
+{
+  @foreach (var order in CartService.Orders.OrderByDescending(o => o.CreatedAt))
+  {
+    <OrderCard Order="order" @key="order.Id" />
+  }
+}

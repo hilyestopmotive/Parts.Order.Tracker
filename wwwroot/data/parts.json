@@ -1,0 +1,188 @@
+[
+    {
+        "id":  1,
+        "name":  "Brake disc",
+        "description":  "Front brake disc, ventilated",
+        "brand":  "Brembo",
+        "partNumber":  "BR-001",
+        "price":  24990,
+        "imageUrl":  "data/images/brake-disk.jpg",
+        "inStock":  true,
+        "stockQuantity":  12,
+        "reviewCount":  124,
+        "features":  [
+                         "Front axle",
+                         "Ventilated",
+                         "Fits multiple models"
+                     ],
+        "category":  "Brake System"
+    },
+    {
+        "id":  2,
+        "name":  "Oil filter",
+        "description":  "Engine oil filter",
+        "brand":  "Bosch",
+        "partNumber":  "BO-002",
+        "price":  4590,
+        "imageUrl":  "data/images/oil-filter.jpg",
+        "inStock":  true,
+        "stockQuantity":  25,
+        "reviewCount":  89,
+        "features":  [
+                         "High filtration efficiency",
+                         "Reliable engine protection",
+                         "Fits multiple models"
+                     ],
+        "category":  "Filters"
+    },
+    {
+        "id":  3,
+        "name":  "Air filter",
+        "description":  "Engine air filter",
+        "brand":  "MANN-FILTER",
+        "partNumber":  "MA-003",
+        "price":  6990,
+        "imageUrl":  "data/images/air-filter.jpg",
+        "inStock":  false,
+        "stockQuantity":  0,
+        "reviewCount":  57,
+        "features":  [
+                         "Clean air for better performance",
+                         "High dust absorption",
+                         "Fits multiple models"
+                     ],
+        "category":  "Filters"
+    },
+    {
+        "id":  4,
+        "name":  "Spark plug",
+        "description":  "Iridium spark plug",
+        "brand":  "NGK",
+        "partNumber":  "NG-004",
+        "price":  3490,
+        "imageUrl":  "data/images/spark-plug.jpg",
+        "inStock":  true,
+        "stockQuantity":  40,
+        "reviewCount":  203,
+        "features":  [
+                         "Improved ignition",
+                         "Better fuel efficiency",
+                         "Fits multiple models"
+                     ],
+        "category":  "Ignition"
+    },
+    {
+        "id":  5,
+        "name":  "Brake disc rear",
+        "description":  "Rear brake disc, solid",
+        "brand":  "ATE",
+        "partNumber":  "AT-005",
+        "price":  18990,
+        "imageUrl":  "data/images/brake-disk.jpg",
+        "inStock":  true,
+        "stockQuantity":  8,
+        "rating":  4.5,
+        "reviewCount":  62,
+        "features":  [
+                         "Rear axle",
+                         "Solid",
+                         "Fits multiple models"
+                     ],
+        "category":  "Brake System"
+    },
+    {
+        "id":  6,
+        "name":  "Oil filter premium",
+        "description":  "Premium spin-on oil filter",
+        "brand":  "MANN-FILTER",
+        "partNumber":  "MA-006",
+        "price":  5290,
+        "imageUrl":  "data/images/oil-filter.jpg",
+        "inStock":  true,
+        "stockQuantity":  31,
+        "rating":  4.8,
+        "reviewCount":  141,
+        "features":  [
+                         "Extended service life",
+                         "Anti-drain valve",
+                         "Fits multiple models"
+                     ],
+        "category":  "Filters"
+    },
+    {
+        "id":  7,
+        "name":  "Cabin air filter",
+        "description":  "Activated carbon cabin filter",
+        "brand":  "Bosch",
+        "partNumber":  "BO-007",
+        "price":  5890,
+        "imageUrl":  "data/images/air-filter.jpg",
+        "inStock":  true,
+        "stockQuantity":  18,
+        "rating":  4.4,
+        "reviewCount":  73,
+        "features":  [
+                         "Activated carbon",
+                         "Reduces odours",
+                         "Fits multiple models"
+                     ],
+        "category":  "Filters"
+    },
+    {
+        "id":  8,
+        "name":  "Air filter sport",
+        "description":  "High-flow engine air filter",
+        "brand":  "K\u0026N",
+        "partNumber":  "KN-008",
+        "price":  15990,
+        "imageUrl":  "data/images/air-filter.jpg",
+        "inStock":  false,
+        "stockQuantity":  0,
+        "rating":  4.7,
+        "reviewCount":  98,
+        "features":  [
+                         "Washable and reusable",
+                         "High airflow",
+                         "Fits multiple models"
+                     ],
+        "category":  "Filters"
+    },
+    {
+        "id":  9,
+        "name":  "Spark plug platinum",
+        "description":  "Long-life platinum spark plug",
+        "brand":  "Bosch",
+        "partNumber":  "BO-009",
+        "price":  3990,
+        "imageUrl":  "data/images/spark-plug.jpg",
+        "inStock":  true,
+        "stockQuantity":  52,
+        "rating":  4.6,
+        "reviewCount":  176,
+        "features":  [
+                         "Long service life",
+                         "Stable ignition",
+                         "Fits multiple models"
+                     ],
+        "category":  "Ignition"
+    },
+    {
+        "id":  10,
+        "name":  "Spark plug set",
+        "description":  "Set of 4 iridium spark plugs",
+        "brand":  "NGK",
+        "partNumber":  "NG-010",
+        "price":  12990,
+        "imageUrl":  "data/images/spark-plug.jpg",
+        "inStock":  true,
+        "stockQuantity":  15,
+        "rating":  4.9,
+        "reviewCount":  87,
+        "features":  [
+                         "4-piece set",
+                         "Improved ignition",
+                         "Fits multiple models"
+                     ],
+        "category":  "Ignition"
+    }
+]

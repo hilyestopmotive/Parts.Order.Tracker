@@ -1,0 +1,11 @@
+<div class="stock @(InStock ? "in" : "out")">
+  <span class="dot"></span>
+  @if (InStock)
+  {
+    <span>In stock@(Quantity > 0 ? $" ({Quantity} pcs)" : string.Empty)</span>
+  }
+  else
+  {
+    <span>Out of stock</span>
+  }
+</div>

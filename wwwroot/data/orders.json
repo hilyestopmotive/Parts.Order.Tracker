@@ -1,0 +1,16 @@
+[
+  {
+    "id": 2,
+    "placedAt": "2026-10-21T13:00:00Z",
+    "status": "Shipped",
+    "confirmedAt": "2026-10-21T13:00:00Z",
+    "shippedAt": "2026-10-22T10:20:00Z",
+    "expectedArrival": "2026-10-28T00:00:00Z",
+    "trackingId": "84099064",
+    "items": [
+      { "partId": 1, "name": "Brake disc", "brand": "Brembo", "description": "Front brake disc, ventilated", "partNumber": "BR-001", "unitPrice": 24990, "imageUrl": "data/images/brake-disk.jpg", "quantity": 1 },
+      { "partId": 2, "name": "Oil filter", "brand": "Bosch", "description": "Engine oil filter", "partNumber": "BO-002", "unitPrice": 4590, "imageUrl": "data/images/oil-filter.jpg", "quantity": 1 },
+      { "partId": 4, "name": "Spark plug", "brand": "NGK", "description": "Iridium spark plug", "partNumber": "NG-004", "unitPrice": 3490, "imageUrl": "data/images/spark-plug.jpg", "quantity": 1 }
+    ]
+  }
+]

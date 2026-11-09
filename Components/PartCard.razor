@@ -1,0 +1,29 @@
+<div class="part-card">
+  <button type="button" class="favorite @(IsFavorite ? "active" : string.Empty)" aria-label="Toggle favorite" aria-pressed="@IsFavorite" @onclick="() => FavoritesService.Toggle(Part.Id)">
+    <i class="bi @(IsFavorite ? "bi-heart-fill" : "bi-heart")"></i>
+  </button>
+
+  <div class="image-wrap">
+    <img src="@Part.ImageUrl" alt="@Part.Name" />
+  </div>
+
+  <div class="brand-row">
+    <span class="brand">@Part.Manufacturer</span>
+    <span class="part-number">@Part.ArticleNumber</span>
+  </div>
+
+  <h5 class="title">@Part.Name</h5>
+  <div class="description">@Part.Description</div>
+
+  <div class="price">@Part.Price.ToEuro()</div>
+  <StockBadge InStock="@Part.InStock" Quantity="1" />
+
+  <div class="actions">
+    <button class="btn btn-primary add"
+            disabled="@(!Part.InStock || !isAuthenticated)"
+            title="@(isAuthenticated ? null : "Log in to add to cart")"
+            @onclick="() => CartService.Add(Part)"> 
+      <i class="bi bi-cart3 me-2"></i>Add to cart
+    </button>
+  </div>
+</div>

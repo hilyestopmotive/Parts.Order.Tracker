@@ -1,0 +1,57 @@
+@using UI.Components
+<PageTitle>Parts</PageTitle>
+
+<div class="search-row">
+  <div class="search-box">
+    <i class="bi bi-search"></i>
+    <input type="search" class="form-control" placeholder="Search for parts, brands, or part number..."
+           @bind="SearchText" @bind:event="oninput" />
+  </div>
+  <select class="form-select category-select" @bind="SelectedCategory">
+    <option value="">All categories</option>
+    @foreach (var category in Categories)
+    {
+      <option value="@category">@category</option>
+    }
+  </select>
+  <button type="button" class="btn btn-primary search-btn" aria-label="Search"><i class="bi bi-search"></i></button>
+</div>
+
+<div class="filter-row">
+  <div class="chips">
+    <button type="button" class="chip @(SelectedCategory == string.Empty ? "active" : string.Empty)" @onclick='() => SelectedCategory = string.Empty'>All</button>
+    @foreach (var category in Categories)
+    {
+      <button type="button" class="chip @(SelectedCategory == category ? "active" : string.Empty)" @onclick="() => SelectedCategory = category">@category</button>
+    }
+  </div>
+  <div class="sort">
+    <label for="sort" class="me-2">Sort by</label>
+    <select id="sort" class="form-select" @bind="SortOption">
+      <option value="popular">Most popular</option>
+      <option value="price-asc">Price: low to high</option>
+      <option value="price-desc">Price: high to low</option>
+      <option value="name">Name</option>
+    </select>
+  </div>
+</div>
+
+@if (parts == null)
+{
+  <p>Loading...</p>
+}
+else if (!FilteredParts.Any())
+{
+  <p class="text-muted">No parts match your search.</p>
+}
+else
+{
+  <div class="row g-4">
+    @foreach (var part in FilteredParts)
+    {
+      <div class="col-12 col-sm-6 col-lg-4 col-xl-3" @key="part.Id">
+        <PartCard Part="@part" />
+      </div>
+    }
+  </div>
+}

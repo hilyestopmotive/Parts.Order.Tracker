@@ -1,0 +1,17 @@
+.stock {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.in { color: #1e9e3a; }
+.in .dot { background: #22c55e; }
+.out { color: #6b7280; }
+.out .dot { background: #c4c8d0; }

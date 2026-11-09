@@ -1,0 +1,9 @@
+@using UI.Services
+
+<NavLink href="cart">
+  <i class="bi bi-cart3"></i>Cart
+  @if (CartService.Count > 0)
+  {
+    <span class="badge ms-1">@CartService.Count</span>
+  }
+</NavLink>

@@ -1,0 +1,81 @@
+<div class="order-card @(expanded ? "expanded" : string.Empty)">
+  <button type="button" class="order-header" @onclick="Toggle" aria-expanded="@expanded">
+    <div class="header-main">
+      <div class="order-number">Order @Order.OrderNumber</div>
+      <div class="placed">Placed on @Order.CreatedAt.ToLocalTime().ToString("MMM d, yyyy 'at' h:mm tt", Culture)</div>
+    </div>
+    <div class="header-status">
+      <span class="status-pill status-@Order.Status.ToString().ToLowerInvariant()">@StatusLabel</span>
+    </div>
+    <div class="header-total">@Order.Total.ToEuro()</div>
+    <div class="chevron">@(expanded ? "▲" : "▼")</div>
+  </button>
+
+  @if (expanded)
+  {
+    <div class="order-body">
+      <div class="info-boxes">
+        <div class="info-box">
+          <div class="info-label">Expected Arrival</div>
+          <div class="info-value arrival">@(Order.ExpectedArrival?.ToString("dd/MM/yyyy") ?? "—")</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">Tracking ID</div>
+          <div class="info-value tracking">@(string.IsNullOrEmpty(Order.TrackingId) ? "—" : Order.TrackingId)</div>
+        </div>
+      </div>
+
+      <div class="timeline">
+        @foreach (var step in Steps)
+        {
+          <div class="step @(step.Done ? "done" : string.Empty)">
+            <div class="step-marker"><span>✓</span></div>
+            <div class="step-label">@step.Label</div>
+            <div class="step-date">
+              @if (step.Date is { } date)
+              {
+                <div>@date.ToLocalTime().ToString("MMM d, yyyy", Culture)</div>
+                <div>@date.ToLocalTime().ToString("h:mm tt", Culture)</div>
+              }
+              else
+              {
+                <div>—</div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="items-title">
+        Items in this order
+        <span class="items-count">(@Order.ProductCount products · @Order.ItemCount items)</span>
+      </div>
+
+      @foreach (var item in Order.Items)
+      {
+        <div class="item-row" @key="item.PartId">
+          <img src="@item.ImageUrl" alt="@item.Name" />
+          <div class="item-info">
+            <div class="item-name">@item.Name</div>
+            <div class="item-meta">@item.Manufacturer · @item.ArticleNumber</div>
+            <div class="item-meta">@item.Description</div>
+          </div>
+          <div class="item-qty">× @item.Quantity</div>
+          <div class="item-unit">
+            <div>@item.UnitPrice.ToEuro()</div>
+            <div class="item-meta">per item</div>
+          </div>
+          <div class="item-total">@item.Total.ToEuro()</div>
+        </div>
+      }
+
+      <div class="order-total">
+        <div>
+          <div class="total-label">Order total</div>
+          <div class="item-meta">@Order.ProductCount products · @Order.ItemCount items</div>
+        </div>
+        <div class="total-value">@Order.Total.ToEuro()</div>
+      </div>
+    </div>
+  }
+</div>

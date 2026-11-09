@@ -1,0 +1,77 @@
+@page "/cart"
+@using UI.DataType
+
+<PageTitle>Cart</PageTitle>
+
+<h1 class="page-title">Shopping cart</h1>
+<p class="page-subtitle">Review your items before placing the order.</p>
+
+@if (orderPlaced is not null)
+{
+  <div class="alert alert-success">
+    Order @orderPlaced.OrderNumber placed. Total: @orderPlaced.Total.ToEuro().
+    <a href="orders" class="alert-link">View orders</a>
+  </div>
+}
+
+@if (orderError is not null)
+{
+  <div class="alert alert-danger">@orderError</div>
+}
+
+@if (CartService.Items.Count == 0)
+{
+  <p>Your cart is empty.</p>
+  <a class="btn btn-outline-secondary" href=""><i class="bi bi-arrow-left me-2"></i>Continue shopping</a>
+}
+else
+{
+  <div class="cart-card">
+    <div class="cart-head">
+      <div class="col-product">Product</div>
+      <div class="col-price">Unit price</div>
+      <div class="col-qty">Quantity</div>
+      <div class="col-total">Total</div>
+      <div class="col-remove"></div>
+    </div>
+
+    @foreach (var item in CartService.Items)
+    {
+      <div class="cart-row" @key="item.PartId">
+        <div class="col-product product">
+          <img src="@item.ImageUrl" alt="@item.Name" />
+          <div>
+            <div class="name">@item.Name</div>
+            <div class="meta">@item.Brand &middot; @item.PartNumber</div>
+          </div>
+        </div>
+        <div class="col-price">@item.UnitPrice.ToEuro()</div>
+        <div class="col-qty">
+          <div class="stepper">
+            <button type="button" aria-label="Decrease quantity" @onclick="() => CartService.SetQuantity(item.PartId, item.Quantity - 1)"><i class="bi bi-dash"></i></button>
+            <span>@item.Quantity</span>
+            <button type="button" aria-label="Increase quantity" @onclick="() => CartService.SetQuantity(item.PartId, item.Quantity + 1)"><i class="bi bi-plus"></i></button>
+          </div>
+        </div>
+        <div class="col-total">@item.Total.ToEuro()</div>
+        <div class="col-remove">
+          <button type="button" class="remove" aria-label="Remove" @onclick="() => CartService.Remove(item.PartId)"><i class="bi bi-trash3"></i></button>
+        </div>
+      </div>
+    }
+
+    <div class="cart-total">
+      <i class="bi bi-tag"></i>
+      <div class="grow">
+        <div class="label">Order total</div>
+        <div class="meta">@CartService.Items.Count products &middot; @CartService.Count items</div>
+      </div>
+      <div class="value">@CartService.Total.ToEuro()</div>
+    </div>
+
+    <div class="cart-actions">
+      <a class="btn btn-outline-secondary" href=""><i class="bi bi-arrow-left me-2"></i>Continue shopping</a>
+      <button class="btn btn-primary place" disabled="@(!isAuthenticated)" @onclick="PlaceOrder">Order</button>
+    </div>
+  </div>
+}
