@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/UI/">
+    <Project Path="UI/UI.csproj" />
+  </Folder>
+  <Folder Name="/WebApi/">
+    <Project Path="WebApi/PartsOrderTracker.Api/PartsOrderTracker.Api.csproj" />
+  </Folder>
+</Solution>
