@@ -32,6 +32,7 @@ builder.Services.AddSingleton<IMongoClient>(_ => new MongoClient(connectionStrin
 builder.Services.AddSingleton(sp =>
   sp.GetRequiredService<IMongoClient>().GetDatabase(databaseName));
 builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, ClaimsCurrentUserService>();
 
 var app = builder.Build();
