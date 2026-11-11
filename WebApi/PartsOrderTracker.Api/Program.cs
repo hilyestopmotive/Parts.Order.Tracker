@@ -28,10 +28,11 @@ if (string.IsNullOrWhiteSpace(databaseName))
   throw new InvalidOperationException("MongoDb:DatabaseName is missing.");
 }
 
+builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<IMongoClient>(_ => new MongoClient(connectionString));
 builder.Services.AddSingleton(sp =>
   sp.GetRequiredService<IMongoClient>().GetDatabase(databaseName));
-builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, ClaimsCurrentUserService>();
 
 var app = builder.Build();

@@ -7,5 +7,4 @@ namespace PartsOrderTracker.Api.Controllers;
 [Route("api/parts")]
 public sealed class PartsController(PartsService partsService) : ControllerBase
 {
-  private readonly PartsService _partsService = partsService;
 }

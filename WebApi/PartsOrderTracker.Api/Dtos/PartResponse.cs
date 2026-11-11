@@ -6,4 +6,7 @@ public sealed record PartResponse(
   string Name,
   string Manufacturer,
   decimal Price,
-  bool InStock);
+  bool InStock,
+  string Category,
+  string ImageUrl,
+  string Description);
