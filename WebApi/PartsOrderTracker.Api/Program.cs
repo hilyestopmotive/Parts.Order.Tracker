@@ -11,7 +11,7 @@ builder.Services
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services.AddOpenApi();
-
+builder.Services.AddSwaggerGen();
 builder.Services.AddProblemDetails();
 
 //Mongo db configuration setup
@@ -34,6 +34,8 @@ builder.Services.AddSingleton(sp =>
   sp.GetRequiredService<IMongoClient>().GetDatabase(databaseName));
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, ClaimsCurrentUserService>();
+builder.Services.AddScoped<PartsService>();
+builder.Services.AddScoped<OrdersService>();
 
 var app = builder.Build();
 
@@ -42,7 +44,8 @@ app.UseExceptionHandler();
 if (app.Environment.IsDevelopment())
 {
   app.MapOpenApi();
-
+  app.UseSwagger();
+  app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
