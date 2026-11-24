@@ -14,6 +14,14 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddProblemDetails();
 
+//CORS: allow the Blazor UI (different origin) to call this API
+builder.Services.AddCors(options =>
+  options.AddPolicy("UiPolicy", policy =>
+    policy.WithOrigins("https://localhost:7053")
+      .AllowAnyHeader()
+      .AllowAnyMethod()
+      .AllowCredentials()));
+
 //Mongo db configuration setup
 var connectionString = builder.Configuration["MongoDb:ConnectionString"];
 if (string.IsNullOrWhiteSpace(connectionString))
@@ -47,6 +55,8 @@ if (app.Environment.IsDevelopment())
   app.UseSwagger();
   app.UseSwaggerUI();
 }
+
+app.UseCors("UiPolicy");
 
 app.UseHttpsRedirection();
 app.MapControllers();

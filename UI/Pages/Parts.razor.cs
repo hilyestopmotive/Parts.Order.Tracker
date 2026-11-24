@@ -61,7 +61,7 @@ public partial class Parts
   {
     try
     {
-      var client = HttpClientFactory.CreateClient("PartsAPI");
+      var client = HttpClientFactory.CreateClient("PartsApi");
       parts = await client.GetFromJsonAsync<List<Part>>("api/parts");
     }
     catch(AccessTokenNotAvailableException ex)

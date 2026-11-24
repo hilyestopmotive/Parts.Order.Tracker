@@ -23,7 +23,8 @@
   </button>
 
   <div class="chips">
-    <button type="button" class="chip @(SelectedCategory == string.Empty ? "active" : string.Empty)">
+    <button type="button" class="chip @(SelectedCategory == string.Empty ? "active" : string.Empty)"
+      @onclick="@(() => SelectedCategory = string.Empty)">
       All
     </button>
 
