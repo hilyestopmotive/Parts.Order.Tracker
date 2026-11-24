@@ -22,11 +22,4 @@ builder.Services.AddScoped<UI.Services.CartService>();
 builder.Services.AddScoped<UI.Services.FavoritesService>();
 builder.Services.AddScoped<UI.Services.OrderNotificationService>();
 
-builder.Services.AddMsalAuthentication(options =>
-{
-  builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);
-
-  options.ProviderOptions.LoginMode = "redirect";
-});
-
 await builder.Build().RunAsync();
