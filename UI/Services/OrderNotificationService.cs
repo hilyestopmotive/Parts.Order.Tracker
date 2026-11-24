@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.SignalR.Client;
 public sealed class OrderNotificationService(
   IConfiguration configuration,
   AuthenticationStateProvider authStateProvider,
-  CartService cartService) : IAsyncDisposable
+  CartService cartService,
+  ILogger<OrderNotificationService> logger) : IAsyncDisposable
 {
   // Must match the message name the worker sends.
   private const string MessageName = "OrderStatusChanged";
@@ -48,8 +49,19 @@ public sealed class OrderNotificationService(
       await cartService.RefreshOrdersAsync();
     });
 
-    await connection.StartAsync();
-    await connection.InvokeAsync("Subscribe", userId);
+    try
+    {
+      await connection.StartAsync();
+      await connection.InvokeAsync("Subscribe", userId);
+    }
+    catch (Exception ex)
+    {
+      // No hub yet (before the SignalR step), or the API is unreachable:
+      // the Orders page still works, it just has no live updates.
+      logger.LogWarning("Live order updates are not available ({ErrorType}).", ex.GetType().Name);
+      await connection.DisposeAsync();
+      connection = null; // try again the next time the Orders page opens
+    }
   }
 
   public async ValueTask DisposeAsync()

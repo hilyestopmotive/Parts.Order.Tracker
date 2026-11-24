@@ -1,6 +1,9 @@
 using System.Text.Json.Serialization;
 using MongoDB.Driver;
 using PartsOrderTracker.Api.Services;
+// LOGIN STEP (API 1/5): usings for token validation (package Microsoft.Identity.Web is already referenced)
+//using Microsoft.AspNetCore.Authentication.JwtBearer;
+//using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,12 @@ builder.Services.AddCors(options =>
       .AllowAnyHeader()
       .AllowAnyMethod()
       .AllowCredentials()));
+
+// LOGIN STEP (API 2/5): validate the Entra ID access token that the UI sends in the Authorization header.
+// The settings come from the "AzureAd" section (TenantId and ClientId are set with user-secrets).
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//  .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+//builder.Services.AddAuthorization();
 
 //Mongo db configuration setup
 var connectionString = builder.Configuration["MongoDb:ConnectionString"];
@@ -59,6 +68,15 @@ if (app.Environment.IsDevelopment())
 app.UseCors("UiPolicy");
 
 app.UseHttpsRedirection();
+
+// LOGIN STEP (API 3/5): read the token (who are you?) and check access (are you allowed?).
+// Keep this order: UseCors -> UseAuthentication -> UseAuthorization -> MapControllers.
+//app.UseAuthentication();
+//app.UseAuthorization();
+
+// LOGIN STEP (API 4/5): delete the next line and uncomment the one after it,
+// so every API endpoint requires a logged-in user (anonymous calls get 401).
 app.MapControllers();
+//app.MapControllers().RequireAuthorization();
 
 app.Run();

@@ -360,3 +360,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Local UI settings with real Entra ID values (Blazor WebAssembly cannot read user-secrets)
+UI/wwwroot/appsettings.Development.json
