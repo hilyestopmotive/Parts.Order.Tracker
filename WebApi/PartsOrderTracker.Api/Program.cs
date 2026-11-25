@@ -4,6 +4,8 @@ using PartsOrderTracker.Api.Services;
 // LOGIN STEP (API 1/5): usings for token validation (package Microsoft.Identity.Web is already referenced)
 //using Microsoft.AspNetCore.Authentication.JwtBearer;
 //using Microsoft.Identity.Web;
+// SIGNALR STEP (API 2/3): using for the hub
+//using PartsOrderTracker.Api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,11 @@ builder.Services.AddCors(options =>
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //  .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 //builder.Services.AddAuthorization();
+
+// SIGNALR STEP (API 2/3): register SignalR and connect it to Azure SignalR Service
+// (Azure:SignalR:ConnectionString is set with user-secrets).
+//builder.Services.AddSignalR().AddAzureSignalR(
+//  builder.Configuration["Azure:SignalR:ConnectionString"]);
 
 //Mongo db configuration setup
 var connectionString = builder.Configuration["MongoDb:ConnectionString"];
@@ -71,12 +78,16 @@ app.UseHttpsRedirection();
 
 // LOGIN STEP (API 3/5): read the token (who are you?) and check access (are you allowed?).
 // Keep this order: UseCors -> UseAuthentication -> UseAuthorization -> MapControllers.
-//app.UseAuthentication();
-//app.UseAuthorization();
+// app.UseAuthentication();
+// app.UseAuthorization();
 
 // LOGIN STEP (API 4/5): delete the next line and uncomment the one after it,
 // so every API endpoint requires a logged-in user (anonymous calls get 401).
 app.MapControllers();
 //app.MapControllers().RequireAuthorization();
+
+// SIGNALR STEP (API 3/3): the UI connects to {ApiBaseUrl}/hubs/orders
+// (CORS "UiPolicy" with AllowCredentials is already required by the SignalR client).
+//app.MapHub<OrdersHub>("/hubs/orders");
 
 app.Run();

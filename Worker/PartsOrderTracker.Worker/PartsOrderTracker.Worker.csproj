@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>parts-order-tracker-worker-workshop</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Generic host for the background service -->
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11" />
+		<!-- Sends messages to Azure SignalR Service from a non-web process -->
+		<PackageReference Include="Microsoft.Azure.SignalR.Management" Version="1.33.1" />
+		<!-- MongoDB queries -->
+		<PackageReference Include="MongoDB.Driver" Version="3.12.0" />
+	</ItemGroup>
+
+</Project>

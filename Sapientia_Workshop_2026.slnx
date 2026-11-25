@@ -5,4 +5,7 @@
   <Folder Name="/WebApi/">
     <Project Path="WebApi/PartsOrderTracker.Api/PartsOrderTracker.Api.csproj" />
   </Folder>
+  <Folder Name="/Worker/">
+    <Project Path="Worker/PartsOrderTracker.Worker/PartsOrderTracker.Worker.csproj" />
+  </Folder>
 </Solution>

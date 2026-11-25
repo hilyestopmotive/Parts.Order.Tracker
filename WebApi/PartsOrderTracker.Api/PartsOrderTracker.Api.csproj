@@ -12,6 +12,8 @@
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
 		<!-- Entra ID and token authentication -->
 		<PackageReference Include="Microsoft.Identity.Web" Version="4.0.1" />
+		<!-- Azure SignalR Service: hosts the hub for live order updates -->
+		<PackageReference Include="Microsoft.Azure.SignalR" Version="1.33.1" />
 		<!-- MongoDB queries -->
 		<PackageReference Include="MongoDB.Driver" Version="3.12.0" />
 		<!-- Swagger UI -->
