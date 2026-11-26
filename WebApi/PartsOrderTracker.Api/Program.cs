@@ -1,11 +1,9 @@
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
 using MongoDB.Driver;
+using PartsOrderTracker.Api.Hubs;
 using PartsOrderTracker.Api.Services;
-// LOGIN STEP (API 1/5): usings for token validation (package Microsoft.Identity.Web is already referenced)
-//using Microsoft.AspNetCore.Authentication.JwtBearer;
-//using Microsoft.Identity.Web;
-// SIGNALR STEP (API 2/3): using for the hub
-//using PartsOrderTracker.Api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +17,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddProblemDetails();
 
-//CORS: allow the Blazor UI (different origin) to call this API
+//CORS: allow the Blazor UI (different origin) to call this API; AllowCredentials is required by SignalR
 builder.Services.AddCors(options =>
   options.AddPolicy("UiPolicy", policy =>
     policy.WithOrigins("https://localhost:7053")
@@ -27,16 +25,14 @@ builder.Services.AddCors(options =>
       .AllowAnyMethod()
       .AllowCredentials()));
 
-// LOGIN STEP (API 2/5): validate the Entra ID access token that the UI sends in the Authorization header.
-// The settings come from the "AzureAd" section (TenantId and ClientId are set with user-secrets).
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//  .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
-//builder.Services.AddAuthorization();
+//Authentication: validate the Entra ID access token sent by the UI ("AzureAd" section, IDs in user-secrets)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+  .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+builder.Services.AddAuthorization();
 
-// SIGNALR STEP (API 2/3): register SignalR and connect it to Azure SignalR Service
-// (Azure:SignalR:ConnectionString is set with user-secrets).
-//builder.Services.AddSignalR().AddAzureSignalR(
-//  builder.Configuration["Azure:SignalR:ConnectionString"]);
+//SignalR through Azure SignalR Service (Azure:SignalR:ConnectionString in user-secrets)
+builder.Services.AddSignalR().AddAzureSignalR(
+  builder.Configuration["Azure:SignalR:ConnectionString"]);
 
 //Mongo db configuration setup
 var connectionString = builder.Configuration["MongoDb:ConnectionString"];
@@ -72,22 +68,18 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
+//Order matters: UseCors -> UseAuthentication -> UseAuthorization -> endpoints
 app.UseCors("UiPolicy");
 
 app.UseHttpsRedirection();
 
-// LOGIN STEP (API 3/5): read the token (who are you?) and check access (are you allowed?).
-// Keep this order: UseCors -> UseAuthentication -> UseAuthorization -> MapControllers.
-// app.UseAuthentication();
-// app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
-// LOGIN STEP (API 4/5): delete the next line and uncomment the one after it,
-// so every API endpoint requires a logged-in user (anonymous calls get 401).
-app.MapControllers();
-//app.MapControllers().RequireAuthorization();
+//Every API endpoint requires a logged-in user (anonymous calls get 401)
+app.MapControllers().RequireAuthorization();
 
-// SIGNALR STEP (API 3/3): the UI connects to {ApiBaseUrl}/hubs/orders
-// (CORS "UiPolicy" with AllowCredentials is already required by the SignalR client).
-//app.MapHub<OrdersHub>("/hubs/orders");
+//The UI connects to {ApiBaseUrl}/hubs/orders for live order updates
+app.MapHub<OrdersHub>("/hubs/orders");
 
 app.Run();

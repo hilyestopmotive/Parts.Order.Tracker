@@ -40,14 +40,10 @@ builder.Services.AddSingleton(sp =>
   return sp.GetRequiredService<IMongoClient>().GetDatabase(options.DatabaseName);
 });
 
-//Order processing: repository, notifier, processor and the polling loop
+//Order processing: repository, SignalR notifier, processor and the polling loop
+//(the notifier needs Azure:SignalR:ConnectionString in user-secrets)
 builder.Services.AddSingleton<IOrderRepository, MongoOrderRepository>();
-
-// SIGNALR STEP (Worker 1/1): delete the LoggingOrderNotifier line and uncomment the SignalROrderNotifier line,
-// so status changes are pushed to the UI through Azure SignalR
-// (Azure:SignalR:ConnectionString is set with user-secrets).
-builder.Services.AddSingleton<IOrderNotifier, LoggingOrderNotifier>();
-//builder.Services.AddSingleton<IOrderNotifier, SignalROrderNotifier>();
+builder.Services.AddSingleton<IOrderNotifier, SignalROrderNotifier>();
 
 builder.Services.AddScoped<OrderProcessor>();
 builder.Services.AddHostedService<Worker>();
